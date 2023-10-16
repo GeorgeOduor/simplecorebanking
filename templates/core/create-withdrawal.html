@@ -1,0 +1,96 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block page_styles %}
+
+{% endblock %}
+{% block Heading %}
+  Withdraw Funds
+{% endblock %}
+{% block maincontent %}
+<style>
+  /* Style the form container */
+form {
+  /* max-width: 800px; */
+  //margin: 0 auto;
+  //padding: 20px;
+  /* background-color: #f7f7f7; */
+  //border-radius: 5px;
+  //box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the form headings */
+h2 {
+  font-size: 1.5rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Style labels and inputs */
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style the submit button */
+button[type="submit"] {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Style the button on hover */
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+</style>
+  <div class="row">
+    <div class="card-body">
+      <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+      <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+            <!-- Address Details -->
+            <div class="form-group">
+            <label for="zip_code">Account Number</label>
+            <input type="text" id="zip_code" name="account_number" maxlength="13" required /><br />
+            </div>
+           <div class="form-group">
+            <label for="address">Amount</label>
+            <input type="number" id="amount" name="amount" min="1" required /><br />
+           </div>
+
+            <!-- Submission Buttons -->
+            <button type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+{% block page_scripts %}
+
+{% endblock %}

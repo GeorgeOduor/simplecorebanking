@@ -1,0 +1,142 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block page_styles %}
+
+{% endblock %}
+{% block Heading %}
+  Create Account
+{% endblock %}
+{% block maincontent %}
+<style>
+  /* Style the form container */
+form {
+  /* max-width: 800px; */
+  //margin: 0 auto;
+  //padding: 20px;
+  /* background-color: #f7f7f7; */
+  //border-radius: 5px;
+  //box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the form headings */
+h2 {
+  font-size: 1.5rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Style labels and inputs */
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style the submit button */
+button[type="submit"] {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Style the button on hover */
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+</style>
+  <div class="row">
+    <div class="card-body">
+      <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+      <form method="post">
+        {% csrf_token %}
+        <div class="row">
+          
+          <div class="col-md-6">
+            <!-- Personal Information -->
+            <h2>Personal Information</h2>
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" maxlength="50" required /><br />
+
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" maxlength="50" required /><br />
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required /><br />
+
+            <label for="mobile">Mobile:</label>
+            <input type="text" id="mobile" name="mobile" maxlength="50" required /><br />
+
+            <label for="nationalid">National ID:</label>
+            <input type="text" id="nationalid" name="nationalid" maxlength="50" required /><br />
+
+            <label for="status">Gender:</label>
+            <select id="status" name="gender" required>
+              <option ></option>
+              <option value="MALE">MALE</option>
+              <option value="FEMALE">FEMALE</option>
+            </select>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required /><br />
+
+            {% comment %} <label for="accountid">Account ID:</label>
+            <input type="text" id="accountid" name="accountid" maxlength="50" required /><br /> {% endcomment %}
+          </div>
+          <div class="col-md-6">
+            <!-- Address Details -->
+            <h2>Address Details</h2>
+            <label for="zip_code">Zip Code:</label>
+            <input type="text" id="zip_code" name="zip_code" maxlength="50" required /><br />
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" maxlength="50" required /><br />
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" maxlength="50" required /><br />
+
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" maxlength="50" required /><br />
+            <hr/>
+            <!-- Status -->
+            <h2>Account Status</h2>
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="BLOCKED">BLOCKED</option>
+              <option value="SUSPENDED">SUSPENDED</option>
+            </select>
+            <br />
+
+            <!-- Submission Buttons -->
+            <button type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+{% block page_scripts %}
+
+{% endblock %}

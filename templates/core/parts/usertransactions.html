@@ -1,0 +1,36 @@
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+            <th>Transaction ID</th>
+            <th>Account Number</th>
+            <th>Transaction Type</th>
+            <th>Transaction Date</th>
+            <th>Amount</th>
+            <th>Account Balance</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th>Transaction ID</th>
+          <th>Account Number</th>
+          <th>Transaction Type</th>
+          <th>Transaction Date</th>
+          <th>Amount</th>
+          <th>Account Balance</th>
+        </tr>
+      </tfoot>
+      <tbody>
+        {% for transaction in transactions %}
+          <tr>
+            <td>{{ transaction.id }}</td>
+            <td>{{ transaction.client.accountid }}</td>
+            <td>{{ transaction.transaction_type }}</td>
+            <td>{{ transaction.transaction_date }}</td>
+            <td>{{ transaction.transaction_amount }}</td>
+            <td>{{ transaction.transaction_balance }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>

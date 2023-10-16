@@ -1,0 +1,149 @@
+<div class="row">
+    
+    <div class="card-body">
+        <form action="" method="post">
+            {% csrf_token %}
+        <div class="row">
+          <div class="col-md-10">
+            <!-- Account Summary -->     
+            <div class="row">
+                <!-- first name    -->  
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input name="first_name" type="text" class="form-control" value="{{ account.first_name }}" readonly />
+                </div>
+                </div>
+                <!-- last name    -->
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input name="last_name" type="text" class="form-control" value="{{ account.last_name }}" readonly />
+                </div>
+                </div>
+                <!-- gender    -->
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select name="gender" id="gender" class="form-control" style="" readonly>
+                        <option value="MALE" {% if account.gender == "MALE" %} selected{% endif %}>MALE</option>
+                        <option value="FEMALE" {% if account.gender == "FEMALE" %} selected{% endif %}>FEMALE</option>
+                    </select>
+                </div>
+                </div>
+                <!-- status    -->
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select name="status" id="" class="form-control" style="" readonly>
+                        <option value="ACTIVE" {% if account.status == "ACTIVE" %} selected{% endif %}>ACTIVE</option>
+                        <option value="BLOCKED" {% if account.status == "BLOCKED" %} selected{% endif %}>BLOCKED</option>
+                        <option value="SUSPENDED" {% if account.status == "SUSPENDED" %} selected{% endif %}>SUSPENDED</option>
+                    </select>
+                </div>
+                </div>
+                <!-- mobile    -->
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label>Mobile</label>
+                    <input name="mobile" type="text" class="form-control" value="{{ account.mobile }}" readonly />
+                </div>
+                </div>
+                <!-- national id    -->
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label>National ID</label>
+                    <input name="nationalid" type="text" class="form-control" value="{{ account.nationalid }}" readonly />
+                </div>
+                </div>
+                <!-- dob    -->
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <input name="dob" type="text" class="form-control" value="{{ account.dob }}" readonly id ="dob"/>
+                </div>
+                </div>
+                <!-- address    -->
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label>Address</label>
+                    <input name="address" type="text" class="form-control" value="{{ account.address }}" readonly />
+                </div>
+                </div>
+                <!-- city    -->
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label>City</label>
+                    <input name="city" type="text" class="form-control" value="{{ account.city }}" readonly />
+                </div>
+                </div>
+                <!-- country    -->
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label>Country</label>
+                    <input name="country" type="text" class="form-control" value="{{ account.country }}" readonly />
+                </div>
+                </div>
+                <!-- email    -->
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input name="email" type="text" class="form-control" value="{{ account.email }}" readonly />
+                </div>
+                </div>
+                <!-- zip code    -->
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label>Zip Code</label>
+                    <input name="zip_code" type="text" class="form-control" value="{{ account.zip_code }}" readonly />
+                </div>
+                </div>
+                
+
+            </div>
+          </div>
+          <div class="col-md-2">
+            <!-- delete account button      -->
+            <button type="button" class="btn btn-danger btn-block" data-target="#deleteModal" data-toggle="modal" >
+                <i class="fas fa-trash"></i> Delete 
+            </button>
+            <hr>
+            {% if account.status == 'ACTIVE' %}
+            <!-- edit account button      -->
+            <button type="button" class="btn btn-primary btn-block" id="edit">
+                <i class="fas fa-edit"></i> Edit 
+            </button>
+
+            {% comment %} <hr> {% endcomment %}
+            <!-- save button -->
+            <button type="submit" class="btn btn-success btn-block" id="save" hidden>
+                <i class="fas fa-save"></i> Save Details
+            </button>
+            <hr>
+             <!-- suspend account button    -->
+            <button type="button" class="btn btn-warning btn-block btn-xs" id="suspend" data-target="#suspendModal" data-toggle="modal">
+                <i class="fas fa-ban"></i> Suspend 
+            </button>
+            <hr>
+            <!-- block account -->
+            <button type="button" class="btn btn-danger btn-block btn-xs" id="block" data-target="#blockModal" data-toggle="modal">
+                <i class="fas fa-ban"></i> Block
+            </button>
+            <hr>
+            {% endif %}
+            {% if account.status == 'SUSPENDED' or account.status == 'BLOCKED' %}
+            <button type="button" class="btn btn-success btn-block btn-xs" id="unsuspend" data-target="#activateModal" data-toggle="modal">
+                <i class="fas fa-check"></i> ACTIVATE
+            </button>
+            <hr />
+            {% endif %}
+            <!-- back to accounts listing button -->
+            <a href="{% url 'core:accounts' %}" class="btn btn-primary btn-block">
+                <i class="fas fa-arrow-left"></i> Back 
+            </a>
+          </div>
+     
+        </div>
+    </form>
+    </div>
+  </div>

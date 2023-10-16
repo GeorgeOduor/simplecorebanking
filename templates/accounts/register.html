@@ -1,0 +1,100 @@
+{% extends 'accounts/authbase.html' %}
+{% load static %}
+{% block authblock %}
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block ">
+                    <img src="{% static 'img/login.jpeg' %}" alt="" srcset="" class="auth_image">
+                </div>
+                <div class="col-lg-7">
+                    {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+          {% endif %}
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div>
+                        <form class="user" action="" method="post">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                        placeholder="First Name" name="firstname">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-user" id="exampleLastName"
+                                        placeholder="Last Name" name="lastname">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                    placeholder="Email Address" name="email">
+                            </div>
+                            <div class="form-group">
+                                <input type="username" class="form-control form-control-user" id="exampleUsername"
+                                    placeholder="Username" name="username" >
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="password" class="form-control form-control-user"
+                                        id="exampleInputPassword" placeholder="Password" name="password1">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control form-control-user"
+                                        id="exampleRepeatPassword" placeholder="Repeat Password" name="password2">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                Register Account
+                            </button>
+                  
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            {% comment %} <a class="small" href="forgot-password.html">Forgot Password?</a> {% endcomment %}
+                        </div>
+                        <div class="text-center">
+                            <a class="small" href="{% url "accounts:login" %}">Already have an account? Login!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const firstNameInput = document.getElementById("exampleFirstName");
+        const lastNameInput = document.getElementById("exampleLastName");
+        const usernameInput = document.getElementById("exampleUsername");
+    
+        // Function to generate the username
+        function generateUsername() {
+            const firstName = firstNameInput.value.trim();
+            const lastName = lastNameInput.value.trim();
+    
+            // Ensure both fields are not empty
+            if (firstName !== "" && lastName !== "") {
+                const username = (firstName.charAt(0) + lastName).toUpperCase();
+                usernameInput.value = username;
+            } else {
+                usernameInput.value = "";
+            }
+        }
+    
+        // Add event listeners to first name and last name input fields
+        firstNameInput.addEventListener("input", generateUsername);
+        lastNameInput.addEventListener("input", generateUsername);
+    });
+</script>
+{% endblock %}
