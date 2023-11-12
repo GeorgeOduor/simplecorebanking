@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-e_sly9k7@q+3*4qi*3-97x76g!+nlc9)1q5-q+!=#jdc0q3wvw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app',"0.0.0.0","*"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -129,12 +129,11 @@ STATIC_URL = 'static/'
 # DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGOUT_REDIRECT_URL = "/accounts/login" 
-STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-STATICPATHS = [
     os.path.join(BASE_DIR, 'staticfiles'),
 ]
-# AUTH_USER_MODEL = 'users.User'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICPATHS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+# # AUTH_USER_MODEL = 'users.User'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

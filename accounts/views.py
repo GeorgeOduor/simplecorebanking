@@ -26,6 +26,7 @@ class LoginView(View):
         username = login_data.get('username')
         password = login_data.get('password')
         user = authenticate(request, username=username, password=password)
+        print(username, password, user,"--------------------------")
         if user:
             login(request, user)
             return redirect('core:home')
