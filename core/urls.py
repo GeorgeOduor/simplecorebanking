@@ -16,4 +16,5 @@ urlpatterns = [
     path('transactions/', TransactionsListing.as_view(), name='transactions'),
     path('transactions/deposit/', CreateDeposit.as_view(), name='create_deposit'),
     path('transactions/withdraw/', CreateWithdraw.as_view(), name='create_withdraw'),
+    path('transactions/transfer_funds/', AccountTransfer.as_view(), name='transfer_funds'),
 ]

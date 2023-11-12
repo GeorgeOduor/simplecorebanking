@@ -253,15 +253,16 @@ class CreateWithdraw(View):
         amount = request.POST.get('amount')
         date = datetime.date.today()
         new_balance = new_trx_balance(
-                model=Transactions,
-                client=UserAccount.objects.get(accountid=account_id),
+                model  =Transactions,
+                client =UserAccount.objects.get(accountid=account_id),
                 transaction_type='DEBIT',
                 transaction_amount= int(amount),
             )  
 
         try:
             # check existing balance
-            transactions = Transactions.objects.filter(client_id = request.user.id)
+            user = UserAccount.objects.get(accountid=account_id)
+            transactions = Transactions.objects.filter(client_id = user.id)
             latest_balance = check_balance(transactions)
             if latest_balance < int(amount):
                 message = f"Insufficient funds in account {account_id}!"
@@ -283,8 +284,73 @@ class CreateWithdraw(View):
             messages.error(request, message)
             return redirect('core:create_withdraw')
     
-
-
+class AccountTransfer(View):
+    def get(self, request):
+        context = {
+            'title': 'Account Transfer'
+        }
+        return render(request, 'core/account-transfer.html', context)
+    
+    def post(self, request):
+        from_account = request.POST.get('from_account_number')
+        to_account = request.POST.get('to_account_number')
+        # check if the two accounts are the same
+        if from_account == to_account:
+            message = "Cannot transfer funds to the same account!"
+            messages.error(request, message)
+            return redirect('core:transfer_funds')
+        # check if account exists
+        from_account_obj = UserAccount.objects.filter(accountid=from_account)
+        to_account_obj = UserAccount.objects.filter(accountid=to_account)
+        if not from_account_obj.exists() or not to_account_obj.exists():
+            message = "One or both accounts do not exist!"
+            messages.error(request, message)
+            return redirect('core:transfer_funds')
+        amount = request.POST.get('amount')
+        date   = datetime.date.today()
+        new_balance_from = new_trx_balance(
+                model  =Transactions,
+                client =UserAccount.objects.get(accountid=from_account),
+                transaction_type='DEBIT',
+                transaction_amount= int(amount),
+            )
+        new_balance_to = new_trx_balance(
+                model  =Transactions,
+                client =UserAccount.objects.get(accountid=to_account),
+                transaction_type='CREDIT',
+                transaction_amount= int(amount),
+            )
+        
+        try:
+            # check existing balance
+            user = UserAccount.objects.get(accountid=from_account)
+            transactions = Transactions.objects.filter(client_id = user.id)
+            latest_balance = check_balance(transactions)
+            if latest_balance < int(amount):
+                message = f"Insufficient funds in account {from_account}!"
+                messages.error(request, message)
+                return redirect('core:transfer_funds')
+            Transactions.objects.create(
+                client = UserAccount.objects.get(accountid=from_account),
+                transaction_type='DEBIT',
+                transaction_date=date,
+                transaction_amount=amount,
+                transaction_balance=new_balance_from
+            )
+            Transactions.objects.create(
+                client = UserAccount.objects.get(accountid=to_account),
+                transaction_type='CREDIT',
+                transaction_date=date,
+                transaction_amount=amount,
+                transaction_balance=new_balance_to
+            )
+            message = f"Transfer of {amount} made successfully!"
+            messages.success(request, message)
+            return redirect('core:transactions')
+        except Exception as e:
+            message = f"Error: {e}"
+            messages.error(request, message)
+            return redirect('core:transfer_funds')
 
     
     

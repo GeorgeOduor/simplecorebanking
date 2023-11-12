@@ -9,7 +9,6 @@ def check_balance(transactions):
 
 def new_trx_balance(model,client,transaction_type,transaction_amount):
         transactions = model.objects.filter(client_id=client)
-        print(transactions, "-----------")
         if transactions.exists():
             # get the latest balance 
             latest_balance = transactions.latest('transaction_date').transaction_balance
